@@ -1,26 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {NiftyApesProvider} from "@niftyapes/sdk";
+import {configureChains, createClient, WagmiConfig} from "wagmi";
+import {publicProvider} from 'wagmi/providers/public'
+import {getDefaultWallets} from "@rainbow-me/rainbowkit";
+import * as allChains from 'wagmi/chains'
+
+
+const GOERLI_CHAIN_ID = 5
+
+const envChain = Object.values(allChains).find(
+    (chain) => chain.id === +(GOERLI_CHAIN_ID || allChains.mainnet)
+)
+
+const {chains, provider} = configureChains(
+    envChain ? [envChain] : [allChains.mainnet],
+    [publicProvider()]
+)
+
+const { connectors } = getDefaultWallets({
+    appName: 'NiftyApes SDK Implementation',
+    chains,
+})
+
+const wagmiClient = createClient({
+    autoConnect: true,
+    connectors,
+    provider,
+})
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <NiftyApesProvider config={{
+            chainId: 2,
+            integrationContractAddress: '0xfa800eb4512a57f1dffe62f3ead634139dbb8547',
+            theme: 'dark'
+        }}>
+            <WagmiConfig client={wagmiClient}>
+
+                <div className="App">
+                    <header className="">NiftyApes SDK</header>
+                </div>
+            </WagmiConfig>
+        </NiftyApesProvider>
+    );
 }
 
 export default App;
