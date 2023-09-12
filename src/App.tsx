@@ -1,9 +1,12 @@
 import React from 'react';
+
 import {NiftyApesProvider} from "@niftyapes/sdk";
+
 import {configureChains, createClient, WagmiConfig} from "wagmi";
 import {publicProvider} from 'wagmi/providers/public'
-import {getDefaultWallets} from "@rainbow-me/rainbowkit";
 import * as allChains from 'wagmi/chains'
+
+import {getDefaultWallets} from "@rainbow-me/rainbowkit";
 
 
 const GOERLI_CHAIN_ID = 5
@@ -17,8 +20,8 @@ const {chains, provider} = configureChains(
     [publicProvider()]
 )
 
-const { connectors } = getDefaultWallets({
-    appName: 'NiftyApes SDK Implementation',
+const {connectors} = getDefaultWallets({
+    appName: 'NiftyApes SDK',
     chains,
 })
 
@@ -36,7 +39,6 @@ function App() {
             theme: 'dark'
         }}>
             <WagmiConfig client={wagmiClient}>
-
                 <div className="App">
                     <header className="">NiftyApes SDK</header>
                 </div>
