@@ -3,7 +3,7 @@ import {useOffers, Offer} from "@niftyapes/sdk";
 
 const UseOffers: React.FC = () => {
 
-    const collection = '0x01c7851ae4d42f7b649ce168716c78fc25fe3d16'
+    const collection = '0xa5ae59eee379fc02206d715b9431ffa53507c152'
     const {data, isFetched} = useOffers({collection, includeExpired: false});
 
     if (!isFetched) {
