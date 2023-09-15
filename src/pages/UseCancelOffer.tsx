@@ -5,8 +5,10 @@ import {formatEther} from "ethers/lib/utils";
 
 const UseCancelOffer: React.FC = () => {
 
-    const collection = '0xa5ae59eee379fc02206d715b9431ffa53507c152'
-    const {data, isFetched} = useOffers({collection, includeExpired: false});
+    const {data, isFetched} = useOffers({
+        collection: '0xa5ae59eee379fc02206d715b9431ffa53507c152',
+        includeExpired: false
+    });
 
     if (!isFetched) {
         return <div>Loading...</div>
@@ -19,7 +21,7 @@ const UseCancelOffer: React.FC = () => {
         <div style={{marginTop: '30px'}}>{data?.length} offers</div>
 
         <div>{data?.map((offer: Offer) => {
-            return <div>{offer.status} - {`${formatEther(offer.offer.price)} ETH`}<CancelOffer offer={offer}/></div>
+            return <div>{offer.status}: {`${formatEther(offer.offer.price)} ETH`} <CancelOffer offer={offer}/></div>
         })}</div>
     </div>
 }
@@ -30,6 +32,8 @@ interface Props {
 
 const CancelOffer: React.FC<Props> = ({offer}) => {
 
+    // Docs https://niftyapes.readme.io/reference/usecancellisting
+    // Cancels an active offer
     const {write} = useCancelOffer({
         offer: offer.offer,
         signature: offer.signature,

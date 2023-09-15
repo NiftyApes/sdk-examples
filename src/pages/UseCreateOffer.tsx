@@ -1,24 +1,25 @@
 import React from 'react';
 import {useCreateOffer} from "@niftyapes/sdk";
-import {Address} from "wagmi";
 import {BigNumber} from "ethers";
 import {ConnectButton} from "@rainbow-me/rainbowkit";
 
 const UseCreateOffer: React.FC = () => {
 
     const terms = {
-        price: BigNumber.from("14000000000000000"),
-        downPayment: BigNumber.from("1700000000000000"),
+        price: BigNumber.from("33000000000000000"),
+        downPayment: BigNumber.from("1500000000000000"),
         durationSeconds: 2592000,
         payPeriodSeconds: 604800,
         expirationSeconds: 1696096115,
-        apr: 43,
+        apr: 0.33,
         collectionOfferLimit: 1
     }
 
+    // Docs https://niftyapes.readme.io/reference/usecreateoffer
+    // Create an offer for a given NFT
     const {isLoading, isSuccess, isError, signAndSaveOffer} = useCreateOffer({
         nftId: "9",
-        nftContractAddress: "0xa5ae59eee379fc02206d715b9431ffa53507c152" as Address,
+        nftContractAddress: "0xa5ae59eee379fc02206d715b9431ffa53507c152",
         terms
     });
 

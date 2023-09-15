@@ -10,6 +10,7 @@ import UseLoans from "./pages/UseLoans";
 import UseCreateOffer from "./pages/UseCreateOffer"
 import UseCancelOffer from "./pages/UseCancelOffer";
 import UseBuyWithFinancing from "./pages/UseBuyWithFinancing";
+import UseMakePayment from "./pages/UseMakePayment";
 
 const CHAIN_ID = 5
 const INTEGRATION_CONTRACT = '0xfa800eb4512a57f1dffe62f3ead634139dbb8547'
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
     {
         path: "/useBuyWithFinancing",
         element: <UseBuyWithFinancing/>,
+    },
+    {
+        path: "/useMakePayment",
+        element: <UseMakePayment/>,
     },
 ]);
 

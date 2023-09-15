@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Offer, useBuyWithFinancing, useOffers} from "@niftyapes/sdk";
 import {ConnectButton} from "@rainbow-me/rainbowkit";
+import {formatEther} from "ethers/lib/utils";
 
 const UseBuyWithFinancing: React.FC = () => {
 
-    const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
-    const collection = '0xa5ae59eee379fc02206d715b9431ffa53507c152'
-    const {data, isFetched} = useOffers({collection, includeExpired: false});
+    const {data, isFetched} = useOffers({
+        collection: '0xa5ae59eee379fc02206d715b9431ffa53507c152',
+        includeExpired: false
+    });
 
     if (!isFetched) {
         return <div>Loading...</div>
@@ -15,17 +17,14 @@ const UseBuyWithFinancing: React.FC = () => {
     return <div>
 
         <ConnectButton/>
-        <div style={{marginTop: '30px'}} />
 
-        <div>{data?.length} offers</div>
-
-        {activeOffer && <ExecutelOffer offer={activeOffer}/>}
+        <div style={{fontWeight: 'bold', marginBottom: '30px'}}>{data?.length} Offers</div>
 
         <div>{data?.map((offer: Offer, idx) => {
-            return <div key={idx}>{offer.status} - Price - {offer.offer.price} - <button
-                onClick={() => setActiveOffer(offer)}>Select Offer</button></div>
+            return <div key={idx}>
+                {offer.status} - {`${formatEther(offer.offer.price)} ETH`}<ExecuteOffer offer={offer}/>
+            </div>
         })}</div>
-
     </div>
 }
 
@@ -33,14 +32,19 @@ interface Props {
     offer: Offer;
 }
 
-const ExecutelOffer: React.FC<Props> = ({offer}) => {
+const ExecuteOffer: React.FC<Props> = ({offer}) => {
 
-    const { write } = useBuyWithFinancing({
+    // Docs https://niftyapes.readme.io/reference/usebuywithfinancing
+    // Executes a loan
+    const {write} = useBuyWithFinancing({
         offer: offer,
         signature: offer.signature,
     })
 
-    return <button onClick={() => write?.()}>Buy with Financing ${offer.offer.price}</button>
+    if (offer.status === "ACTIVE") {
+        return <button onClick={() => write?.()}>Buy with Financing</button>
+    }
+    return null;
 }
 
 
