@@ -27,7 +27,6 @@ const UseCreateOffer: React.FC = () => {
     const {hasCheckedApproval, hasApproval, write} = useERC721Approve({nftId, nftContractAddress})
     const approvalRequired = hasCheckedApproval && !hasApproval
 
-
     return <div>
         <ConnectButton/>
 
