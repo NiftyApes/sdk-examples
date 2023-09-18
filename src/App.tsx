@@ -89,6 +89,7 @@ const router = createBrowserRouter([
 function App() {
     return (
         <NiftyApesProvider config={{
+            apiKey:'YOUR_API_KEY_HERE',
             chainId: CHAIN_ID,
             integrationContractAddress: INTEGRATION_CONTRACT,
             theme: 'dark',
