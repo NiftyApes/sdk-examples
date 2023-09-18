@@ -5,6 +5,8 @@ import {formatEther} from "ethers/lib/utils";
 
 const UseBuyWithFinancing: React.FC = () => {
 
+
+    // Fetch active offers
     const {data, isFetched} = useOffers({
         collection: '0x5c20670e19e557930fcc76908c500ff870967087',
         includeExpired: false

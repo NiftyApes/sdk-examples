@@ -18,6 +18,7 @@ import UseSeizeAsset from "./pages/UseSeizeAsset";
 
 const CHAIN_ID = 5
 const INTEGRATION_CONTRACT = '0xfa800eb4512a57f1dffe62f3ead634139dbb8547'
+const NIFTY_APES_API_KEY = "nifty-apes-api-key"
 
 const envChain = Object.values(allChains).find(
     (chain) => chain.id === +(CHAIN_ID || allChains.mainnet)
@@ -89,7 +90,6 @@ const router = createBrowserRouter([
 function App() {
     return (
         <NiftyApesProvider config={{
-            apiKey:'YOUR_API_KEY_HERE',
             chainId: CHAIN_ID,
             integrationContractAddress: INTEGRATION_CONTRACT,
             theme: 'dark',
