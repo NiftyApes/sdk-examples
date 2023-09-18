@@ -1,13 +1,16 @@
 import React from 'react';
-import {useCreateOffer} from "@niftyapes/sdk";
+import {useCreateOffer, useERC721Approve} from "@niftyapes/sdk";
 import {BigNumber} from "ethers";
 import {ConnectButton} from "@rainbow-me/rainbowkit";
 
 const UseCreateOffer: React.FC = () => {
 
+    const nftId = "1"
+    const nftContractAddress = "0x5c20670e19e557930fcc76908c500ff870967087"
+
     const terms = {
-        price: BigNumber.from("33000000000000000"),
-        downPayment: BigNumber.from("1500000000000000"),
+        price: BigNumber.from("11000000000000000"),
+        downPayment: BigNumber.from("2200000000000000"),
         durationSeconds: 2592000,
         payPeriodSeconds: 604800,
         expirationSeconds: 1696096115,
@@ -18,15 +21,19 @@ const UseCreateOffer: React.FC = () => {
     // Docs https://niftyapes.readme.io/reference/usecreateoffer
     // Create an offer for a given NFT
     const {isLoading, isSuccess, isError, signAndSaveOffer} = useCreateOffer({
-        nftId: "9",
-        nftContractAddress: "0xa5ae59eee379fc02206d715b9431ffa53507c152",
-        terms
+        nftId, nftContractAddress, terms
     });
+
+    const {hasCheckedApproval, hasApproval, write} = useERC721Approve({nftId, nftContractAddress})
+    const approvalRequired = hasCheckedApproval && !hasApproval
+
 
     return <div>
         <ConnectButton/>
+
         <div style={{marginTop: '30px'}}>
-            <button onClick={signAndSaveOffer}>Create Offer</button>
+            {approvalRequired && <button onClick={() => write?.()}>Approve Transfer</button>}
+            <button disabled={approvalRequired} onClick={signAndSaveOffer}>Create Offer</button>
         </div>
         <div>{isLoading && 'Loading'}</div>
         <div>{isSuccess && 'Offer created'}</div>

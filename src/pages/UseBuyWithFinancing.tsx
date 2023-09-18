@@ -6,7 +6,7 @@ import {formatEther} from "ethers/lib/utils";
 const UseBuyWithFinancing: React.FC = () => {
 
     const {data, isFetched} = useOffers({
-        collection: '0xa5ae59eee379fc02206d715b9431ffa53507c152',
+        collection: '0x5c20670e19e557930fcc76908c500ff870967087',
         includeExpired: false
     });
 
@@ -36,10 +36,7 @@ const ExecuteOffer: React.FC<Props> = ({offer}) => {
 
     // Docs https://niftyapes.readme.io/reference/usebuywithfinancing
     // Executes a loan
-    const {write} = useBuyWithFinancing({
-        offer: offer,
-        signature: offer.signature,
-    })
+    const {write} = useBuyWithFinancing({offer})
 
     if (offer.status === "ACTIVE") {
         return <button onClick={() => write?.()}>Buy with Financing</button>

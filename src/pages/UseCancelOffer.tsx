@@ -34,10 +34,7 @@ const CancelOffer: React.FC<Props> = ({offer}) => {
 
     // Docs https://niftyapes.readme.io/reference/usecancellisting
     // Cancels an active offer
-    const {write} = useCancelOffer({
-        offer: offer.offer,
-        signature: offer.signature,
-    })
+    const {write} = useCancelOffer({offer})
 
     if (offer.status === "ACTIVE") {
         return <button onClick={() => write?.()}>Cancel Offer</button>
